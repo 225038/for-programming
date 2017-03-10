@@ -26,10 +26,10 @@ public class Laba2 {
             System.exit(0);
         }
         //тут должно быть заполнение коллекции из файла
-        while{
+        while{ // не прописано условие, компилятор ругается ATTENTION!!!
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String command = reader.readLine().trim();
-            if (command.equals(save));
+            if (command.equals(save)); //и тут ругается ATTENTION!!!
         }
             /* try {
             //PrintWriter обеспечит возможности записи в файл
