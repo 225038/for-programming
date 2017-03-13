@@ -5,29 +5,82 @@
  */
 package laba2;
 
-/**
- *
- * @author саша и кирюша
- */
+import java.util.Random;
 
-
-public class Employer extends laba2.Character {
+public class Employer extends Character{
     private int profit;
-    
-    public Employer(String name, String profession, laba2.Workplace workplace, int profit){
+    Exception e = new Exception();
+
+    public Employer(String name, String profession, Workplace workplace, int profit){
         super(name, profession, workplace);
         this.profit = profit;
 
     }
-    
-    public void lowerSalary(Employee employee){
-        if (employee.salary == Salary.High) employee.salary = Salary.Normal;
-        if (employee.salary == Salary.Normal) employee.salary = Salary.Low;
+
+    public void lowerSalary(Employee employee,int subtraction) throws /*NegativeSalary*/Exception{
+        try{
+            if (employee.salary - subtraction >= 0){
+                employee.salary -= subtraction;
+                profit += subtraction;
+            } else{
+                throw e;//new NegativeSalaryException("Зарплата не может быть отрицательной");
+            }
+        } catch(NegativeSalaryException e){
+            employee.salary = 0;
+        }
     }
-    
+
+    public Error getError() {
+        return new Error() {
+            @Override
+            public String getMessage() {
+                return "ёу"; //To change body of generated methods, choose Tools | Templates.
+            }
+
+        };
+    }
+
+    public void method() {
+        try {
+            if(new Random().nextBoolean()) {
+                throw getError();
+            }
+        } catch (Error er) {
+
+        }
+    }
+
     @Override
     public void work() {
-        System.out.println("Выполняет обязанности: " + profession);
+
+        abstract class Responsibility{
+
+            {
+                int x = 777;
+                System.out.print(x);
+            }
+
+            String responsibility;
+
+            Responsibility(String profession){
+                System.out.println("pre");
+                responsibility = "Выполняет обязанности: " + profession;
+                System.out.println("post");
+            }
+            public String getResponsibility(){
+                return responsibility;
+            }
+
+            abstract void sout();
+        }
+
+        Responsibility resp = new Responsibility(profession){
+            @Override
+            public void sout(){
+                System.out.println(this.getResponsibility());
+            }
+        };
+        resp.sout();
     }
 
     @Override
@@ -59,10 +112,11 @@ public class Employer extends laba2.Character {
     public String toString() {
         return "Employer{" + "profit=" + profit + '}';
     }
-    
+
     public void makeNote(FactoryWorker worker, ManagerNotebook notebook){
         notebook.setOwner(this);
         notebook.addWorker(worker);
         worker.sign(notebook);
     }
 }
+
