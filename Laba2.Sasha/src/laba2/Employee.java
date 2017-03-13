@@ -4,50 +4,52 @@
  * and open the template in the editor.
  */
 package laba2;
-
 import java.util.Objects;
 
-/**
- *
- * @author саша и кирюша
- */
-
 public class Employee extends Character{
-    protected Salary salary;
-    protected byte attitudeToBoss;
+    protected int salary;
+    protected AttitudeToBoss attitudeToBoss;
     protected byte workQuality;
-    
-    public Employee(String name, String profession, Workplace workplace, int salary ,byte attitudeToBoss, byte workQuality) {
+
+    public Employee(String name, String profession, Workplace workplace, int salary ,AttitudeToBoss attitudeToBoss, byte workQuality) {
         super(name, profession, workplace);
-        this.salary = Salary.Low;
+        this.salary = salary;
         this.attitudeToBoss = attitudeToBoss;
         this.workQuality = workQuality;
-    }   
-            
+    }
+
     @Override
     public void work() {
-        if (attitudeToBoss < 0)
-            workQuality --;
-        else
-            if (attitudeToBoss > 0) 
-                workQuality ++;
-    }      
+        if (attitudeToBoss == AttitudeToBoss.HATE)
+            workQuality = -128;
+        if (attitudeToBoss == AttitudeToBoss.LOW){
+            if (workQuality > -108) workQuality -= 20;
+            else workQuality = -128;
+        }
+        if (attitudeToBoss == AttitudeToBoss.NORMAL){
+            if (workQuality > 107) workQuality += 20;
+            else workQuality = 127;
+        }
+        if (attitudeToBoss == AttitudeToBoss.HIGH)
+            workQuality = 127;
+    }
 
     @Override
     public String toString() {
-        return "Employee{" + "salary=" + salary + ", attitudeToBoss=" + attitudeToBoss + ", workQuality=" + workQuality + '}';
+        return "Employee{" + "salary=" + salary + ", attitudeToBoss=" + attitudeToBoss.attitude + ", workQuality=" + workQuality + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.salary);
-        hash = 79 * hash + this.attitudeToBoss;
-        hash = 79 * hash + this.workQuality;
+        hash = 29 * hash + this.salary;
+        hash = 29 * hash + Objects.hashCode(this.attitudeToBoss);
+        hash = 29 * hash + this.workQuality;
         return hash;
     }
 
-    
+
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
